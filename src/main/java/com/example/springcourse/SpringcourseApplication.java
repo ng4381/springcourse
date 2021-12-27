@@ -5,6 +5,7 @@ import com.example.springcourse.domain.Comment;
 import com.example.springcourse.domain.Link;
 import com.example.springcourse.repository.CommentRepository;
 import com.example.springcourse.repository.LinkRepository;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class SpringcourseApplication {
 		System.out.println("Welcome to springit");
 	}
 
+	@Bean
+	PrettyTime prettyTime() {
+		return new PrettyTime();
+	}
+
+	/*
 	@Bean
 	CommandLineRunner runner() {
 		return args -> {
@@ -56,5 +63,5 @@ public class SpringcourseApplication {
 
 		};
 	}
-
+	 */
 }
