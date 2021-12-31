@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 @EnableConfigurationProperties(SpringitProperties.class)
 //@EnableJpaAuditing
@@ -35,6 +36,11 @@ public class SpringcourseApplication {
 	@Bean
 	PrettyTime prettyTime() {
 		return new PrettyTime();
+	}
+
+	@Bean
+	public SpringSecurityDialect securityDialect() {
+		return new SpringSecurityDialect();
 	}
 
 	/*
