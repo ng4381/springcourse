@@ -37,9 +37,14 @@ public class Link extends Auditable{
     //@URL(message = "Please enter a valid url.")
     private String url;
 
+    @OneToMany(mappedBy = "link")
+    private List<Vote> votes = new ArrayList<>();
+
     // comments
     @OneToMany(mappedBy = "link")
     private List<Comment> comments = new ArrayList<>();
+
+    private int voteCount = 0;
 
     public void addComment(Comment comment) {
         comments.add(comment);
