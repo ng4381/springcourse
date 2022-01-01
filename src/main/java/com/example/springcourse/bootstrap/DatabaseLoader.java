@@ -1,5 +1,6 @@
 package com.example.springcourse.bootstrap;
 
+import com.example.springcourse.domain.Comment;
 import com.example.springcourse.domain.Link;
 import com.example.springcourse.domain.Role;
 import com.example.springcourse.domain.User;
@@ -52,7 +53,21 @@ public class DatabaseLoader implements CommandLineRunner {
         links.put("File download example using Spring REST Controller","https://www.jeejava.com/file-download-example-using-spring-rest-controller/");
 
         links.forEach((k,v) -> {
-            linkRepository.save(new Link(k,v));
+
+            Link link = new Link(k,v);
+            linkRepository.save(link);
+
+            Comment comment1 = new Comment("my comment 1",link);
+            Comment comment2 = new Comment("my comment 2",link);
+            Comment comment3 = new Comment("my comment 3",link);
+            Comment comments[] = {comment1, comment2, comment3};
+            for(Comment comment : comments) {
+                commentRepository.save(comment);
+                link.addComment(comment);
+            }
+
+
+
             // we will do something with comments later
         });
 
