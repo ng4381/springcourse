@@ -4,6 +4,7 @@ import com.example.springcourse.domain.Comment;
 import com.example.springcourse.domain.Link;
 import com.example.springcourse.repository.CommentRepository;
 import com.example.springcourse.repository.LinkRepository;
+import com.example.springcourse.service.LinkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
@@ -32,18 +33,19 @@ public class LinkController {
      */
 
     private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
-    private LinkRepository linkRepository;
+    private LinkService linkService;
     private CommentRepository commentRepository;
 
-    public LinkController(LinkRepository linkRepository, CommentRepository commentRepository) {
+
+    public LinkController(LinkService linkService, CommentRepository commentRepository) {
+        this.linkService = linkService;
         this.commentRepository = commentRepository;
-        this.linkRepository = linkRepository;
     }
 
     @GetMapping("/")
     public String list(Model model) {
 
-        List<Link> allLinks = linkRepository.findAll();
+        List<Link> allLinks = linkService.findAll();
         model.addAttribute("links", allLinks);
         model.addAttribute("success", model.containsAttribute("success"));
         return "link/list";
@@ -51,7 +53,7 @@ public class LinkController {
 
     @GetMapping("/link/{id}")
     public String read(@PathVariable Long id, Model model) {
-        Optional<Link> link = linkRepository.findById(id);
+        Optional<Link> link = linkService.findById(id);
         if( link.isPresent() ) {
             Link currentLink = link.get();
             Comment comment = new Comment();
@@ -80,7 +82,7 @@ public class LinkController {
             return "link/submit";
         }else {
             // save our link
-            linkRepository.save(link);
+            linkService.save(link);
             logger.info("New link was saved successfully");
             redirectAttributes
                     .addAttribute("id", link.getId())
