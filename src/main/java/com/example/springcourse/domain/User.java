@@ -1,7 +1,6 @@
 package com.example.springcourse.domain;
 
 import com.example.springcourse.domain.validator.PasswordsMatch;
-import jdk.dynalink.linker.LinkerServices;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,12 +9,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
 @RequiredArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @PasswordsMatch
@@ -32,7 +34,7 @@ public class User implements UserDetails {
 
     @NonNull
     @Column(length = 100)
-    private  String password;
+    private String password;
 
     @NonNull
     @Column(nullable = false)
@@ -48,32 +50,31 @@ public class User implements UserDetails {
 
 
     @NonNull
-   @NotEmpty(message = "You must enter First Name.")
-   private String firstName;
+    @NotEmpty(message = "You must enter First Name.")
+    private String firstName;
 
-   @NonNull
-   @NotEmpty(message = "You must enter Last Name.")
-   private String lastName;
+    @NonNull
+    @NotEmpty(message = "You must enter Last Name.")
+    private String lastName;
 
-   @Transient
-   @Setter(AccessLevel.NONE)
-   private String fullName;
+    @Transient
+    @Setter(AccessLevel.NONE)
+    private String fullName;
 
-   @NonNull
-   @NotEmpty(message = "Please enter alias.")
-   @Column(nullable = false, unique = true)
-   private String alias;
+    @NonNull
+    @NotEmpty(message = "Please enter alias.")
+    @Column(nullable = false, unique = true)
+    private String alias;
 
-   @Transient
-   @NotEmpty(message = "Please enter Password confirmation")
-   private String confirmPassword;
+    @Transient
+    @NotEmpty(message = "Please enter Password confirmation")
+    private String confirmPassword;
 
-   private String activationCode;
+    private String activationCode;
 
-   public String getFullName(){
-       return firstName + " " + lastName;
-   }
-
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 
 
     public void addRole(Role role) {
